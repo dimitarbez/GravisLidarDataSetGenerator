@@ -46,44 +46,42 @@ try:
     scan_data = []
 
     while True:
-        try:
-            print('Collecting a scan...')
-            for i, scan in enumerate(lidar.iter_scans(max_buf_meas=5000)):
-                print(f'iter {i}')
-                for (_, angle, distance) in scan:
-                    scan_data.append((angle, distance))
-                    print((angle, distance))
+        print('Collecting a scan...')
+        for i, scan in enumerate(lidar.iter_scans(max_buf_meas=5000)):
+            print(f'iter {i}')
+            for (_, angle, distance) in scan:
+                scan_data.append((angle, distance))
+                print((angle, distance))
 
-                if i >= 10:
-                    print('gathering data finished')
-                    break  # We break after one full revolution to get 360 readings
+            if i >= 10:
+                print('gathering data finished')
+                break  # We break after one full revolution to get 360 readings
 
-            display_scan(scan_data)
+        display_scan(scan_data)
 
-            # Check keyboard input for control
-            if keyboard.is_pressed('w'):  # forward
-                label = 'forward'
-                ser.write('motor:forward\n'.encode())  # replace with your command
-            elif keyboard.is_pressed('a'):  # left
-                label = 'left'
-                ser.write('motor:left\n'.encode())  # replace with your command
-            elif keyboard.is_pressed('d'):  # right
-                label = 'right'
-                ser.write('motor:right\n'.encode())  # replace with your command
-            elif keyboard.is_pressed('q'):  # quit
-                break
-            else:
-                ser.write('motor:stop\n'.encode())  # replace with your command
-                continue  # Skip if no valid key is pressed
+        # Check keyboard input for control
+        if keyboard.is_pressed('w'):  # forward
+            label = 'forward'
+            ser.write('motor:forward\n'.encode())  # replace with your command
+        elif keyboard.is_pressed('a'):  # left
+            label = 'left'
+            ser.write('motor:left\n'.encode())  # replace with your command
+        elif keyboard.is_pressed('d'):  # right
+            label = 'right'
+            ser.write('motor:right\n'.encode())  # replace with your command
+        elif keyboard.is_pressed('q'):  # quit
+            break
+        else:
+            ser.write('motor:stop\n'.encode())  # replace with your command
+            continue  # Skip if no valid key is pressed
 
-            # Save the scan_data and label
-            with open('lidar_data.txt', 'a') as outfile:
-                outfile.write(','.join(str(x) for x in scan_data))
-                outfile.write(f',{label}\n')
+        # Save the scan_data and label
+        with open('lidar_data.txt', 'a') as outfile:
+            outfile.write(','.join(str(x) for x in scan_data))
+            outfile.write(f',{label}\n')
 
-            scan_data = [0]*360
-        except Exception as e:
-            print(e)
+        scan_data = []
+
 
     lidar.stop()
     lidar.stop_motor()
