@@ -55,6 +55,7 @@ try:
                 print((angle, distance))
                 if angle >= 350:
                     break
+            break
 
         display_scan(scan_data)
 
