@@ -23,7 +23,7 @@ def display_scan(scan_data):
     cv2.imshow('Scan', img)
     
     # Draw each point in the scan data
-    for angle, distance in enumerate(scan_data):
+    for angle, distance in scan_data:
         if distance > 0:  # Ignore points with zero distance
             # Convert angle and distance to image coordinates
             polar_angle = np.radians(angle)
