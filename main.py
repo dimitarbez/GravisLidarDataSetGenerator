@@ -81,7 +81,7 @@ try:
 
             scan_data = [0]*360
         except Exception as e:
-            lidar.clear_input()
+            print(e)
 
     lidar.stop()
     lidar.stop_motor()
