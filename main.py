@@ -1,11 +1,16 @@
-import rplidar
+from pyrplidar import PyRPlidar
 import time
 import keyboard
 import cv2
 import numpy as np
 import serial
 
-lidar = rplidar.RPLidar('/dev/ttyUSB1')  # replace with your device
+lidar = PyRPlidar()  
+lidar.connect(port='/dev/ttyUSB1', baudrate=115200, timeout=3)  # replace with your device
+
+print(lidar.get_health())
+print(lidar.get_info())
+print(lidar.get_samplerate())
 
 # Create serial object
 ser = serial.Serial('/dev/ttyUSB0', 115200)  # replace with your serial port and baudrate
@@ -31,14 +36,10 @@ def display_scan(scan_data):
 
 try:
     print('Starting scan')
-    lidar.start_motor()
-    time.sleep(1)
     lidar.start_scan()
 
     # create a list to hold our readings
     scan_data = [0]*360
-
-    ser.write('motor:speed:200\n'.encode())
 
     while True:
         print('Collecting a scan...')
