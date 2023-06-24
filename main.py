@@ -21,6 +21,8 @@ def display_scan(scan_data):
     # Create an empty image
     img = np.zeros((500, 500, 3), dtype=np.uint8)
     cv2.imshow('Scan', img)
+	cv2.waitKey(200)
+	
 
     # Draw each point in the scan data
     for angle, distance in enumerate(scan_data):
@@ -52,8 +54,8 @@ try:
                 print(f'iter {i}')
                 for (_, angle, distance) in scan:
                     scan_data.append((angle, distance))
-                print(scan_data)
-                
+					print((angle, distance))
+
                 if i >= 10:
                     break  # We break after one full revolution to get 360 readings
 
