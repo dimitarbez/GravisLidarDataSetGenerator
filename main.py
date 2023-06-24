@@ -46,16 +46,32 @@ try:
     # create a list to hold our readings
     scan_data = []
 
+    # create a list to hold our readings
+    scan_data = []
+
+    start_collecting = False  # flag to indicate when to start collecting data
+
     while True:
+
         print('Collecting a scan...')
         for i, scan in enumerate(lidar.iter_scans(max_buf_meas=5000)):
             print(f'iter {i}')
             for (_, angle, distance) in scan:
-                scan_data.append((angle, distance))
-                print((angle, distance))
-                if angle >= 350:
+                if angle == 0:  # When the first angle of 0 is encountered
+                    start_collecting = True  # Set flag to True
+                    scan_data = []  # Empty the list to remove previous readings
+
+                if start_collecting:  # Only collect data when flag is True
+                    scan_data.append((angle, distance))
+                    print((angle, distance))
+
+                if angle >= 350 and start_collecting:  # Stop collecting data after reaching 350 degrees
+                    start_collecting = False
                     break
-            break
+
+            if not start_collecting:  # Break the outer loop when data collection is complete
+                break
+
 
         display_scan(scan_data)
 
