@@ -20,6 +20,7 @@ ser = serial.Serial('/dev/ttyUSB0', 115200)  # replace with your serial port and
 def display_scan(scan_data):
     # Create an empty image
     img = np.zeros((500, 500, 3), dtype=np.uint8)
+    cv2.imshow('Scan', img)
 
     # Draw each point in the scan data
     for angle, distance in enumerate(scan_data):
@@ -42,7 +43,7 @@ try:
     time.sleep(2)
 
     # create a list to hold our readings
-    scan_data = [0]*360
+    scan_data = []
 
     while True:
         try:
@@ -50,10 +51,10 @@ try:
             for i, scan in enumerate(lidar.iter_scans(max_buf_meas=5000)):
                 print(f'iter {i}')
                 for (_, angle, distance) in scan:
-                    scan_data[min([359, int(angle)])] = distance
+                    scan_data.append((angle, distance))
                 print(scan_data)
                 
-                if i >= 360:
+                if i >= 10:
                     break  # We break after one full revolution to get 360 readings
 
             display_scan(scan_data)
