@@ -53,12 +53,12 @@ try:
             for (_, angle, distance) in scan:
                 scan_data.append((angle, distance))
                 print((angle, distance))
+                display_scan(scan_data)
 
             if i >= 10:
                 print('gathering data finished')
                 break  # We break after one full revolution to get 360 readings
 
-        display_scan(scan_data)
 
         # Check keyboard input for control
         if keyboard.is_pressed('w'):  # forward
