@@ -34,9 +34,9 @@ def display_scan(scan_data):
             # Draw the point
             cv2.circle(img, (x, y), 1, (0, 255, 0), -1)
 
-    # Show the image
-    cv2.imshow('Scan', img)
-    cv2.waitKey(1)
+        # Show the image
+        cv2.imshow('Scan', img)
+        cv2.waitKey(1)
 
 
 try:
