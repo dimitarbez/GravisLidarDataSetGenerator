@@ -48,14 +48,12 @@ try:
 
     while True:
         print('Collecting a scan...')
-        for i, scan in enumerate(lidar.iter_scans(max_buf_meas=5000)):
-            print(f'iter {i}')
-            for (_, angle, distance) in scan:
-                scan_data.append((angle, distance))
-                print((angle, distance))
-                display_scan(scan_data)
+        for _, quality, angle, distance in enumerate(lidar.iter_measurments(max_buf_meas=5000)):
+            scan_data.append((angle, distance))
+            print((angle, distance))
+            display_scan(scan_data)
 
-            if i >= 10:
+            if >= 359:
                 print('gathering data finished')
                 break  # We break after one full revolution to get 360 readings
 
@@ -77,9 +75,9 @@ try:
             continue  # Skip if no valid key is pressed
 
         # Save the scan_data and label
-        with open('lidar_data.txt', 'a') as outfile:
-            outfile.write(','.join(str(x) for x in scan_data))
-            outfile.write(f',{label}\n')
+        # with open('lidar_data.txt', 'a') as outfile:
+        #     outfile.write(','.join(str(x) for x in scan_data))
+        #     outfile.write(f',{label}\n')
 
         scan_data = []
 
