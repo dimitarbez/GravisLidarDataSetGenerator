@@ -26,6 +26,7 @@ def display_scan(scan_data):
     for angle, distance in scan_data:
         if distance > 0:  # Ignore points with zero distance
             # Convert angle and distance to image coordinates
+            distance = distance * 2
             polar_angle = np.radians(angle)
             x = int(250 + distance * np.cos(polar_angle) / 100)
             y = int(250 + distance * np.sin(polar_angle) / 100)
