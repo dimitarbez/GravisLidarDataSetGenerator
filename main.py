@@ -53,7 +53,7 @@ try:
             print((angle, distance))
             display_scan(scan_data)
 
-            if >= 359:
+            if angle >= 359:
                 print('gathering data finished')
                 break  # We break after one full revolution to get 360 readings
 
