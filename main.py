@@ -21,6 +21,7 @@ def display_scan(scan_data):
     # Create an empty image
     img = np.zeros((500, 500, 3), dtype=np.uint8)
     cv2.imshow('Scan', img)
+    
 	cv2.waitKey(200)
 	
 
