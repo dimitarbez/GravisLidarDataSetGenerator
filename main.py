@@ -49,11 +49,11 @@ try:
             print('Collecting a scan...')
             for i, scan in enumerate(lidar.iter_scans(max_buf_meas=5000)):
                 print(f'iter {i}')
-                print('scan')
-                print(scan)
                 for (_, angle, distance) in scan:
                     scan_data[min([359, int(angle)])] = distance
-                if i > 0:
+                print(scan_data)
+                
+                if i >= 360:
                     break  # We break after one full revolution to get 360 readings
 
             display_scan(scan_data)
