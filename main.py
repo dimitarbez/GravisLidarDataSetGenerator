@@ -53,7 +53,7 @@ try:
             for (_, angle, distance) in scan:
                 scan_data.append((angle, distance))
                 print((angle, distance))
-                if angle >= 359:
+                if angle >= 350:
                     break
 
         display_scan(scan_data)
